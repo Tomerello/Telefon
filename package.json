@@ -1,0 +1,26 @@
+{
+  "name": "telefon",
+  "version": "1.0.0",
+  "description": "Tomerello Phone Status Page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tomerello/Telefon.git"
+  },
+  "keywords": [
+    "Telefon",
+    "Node",
+    "Javascript",
+    "Home",
+    "assistant"
+  ],
+  "author": "Tomerello",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tomerello/Telefon/issues"
+  },
+  "homepage": "https://github.com/Tomerello/Telefon#readme"
+}
