@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Charging 🔋</title>
+</head>
+<body>
+    <div id="chargingImage" style="height:291px; width: 396px; background-image: url('images/notcharging.png');"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const chargingImage = document.querySelector('#chargingImage');
+        var socket = io();
+        socket.on('chargingStatus', (msg) => {
+            if(msg == "Charging"){
+                document.title = msg + "🔋";
+                chargingImage.style.backgroundImage = "url('images/charging-battery-animated-gif.gif')"
+            }
+            else if(msg == "Not Charging"){
+                document.title = msg + "🔋⚡";
+                chargingImage.style.backgroundImage = "url('images/notcharging.png')"
+            }
+        });
+    </script>
+</body>
+</html>

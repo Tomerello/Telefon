@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http');
+
 const WebSocketClient = require('websocket').client;
 var socket = new WebSocketClient();
 const APIv1 = require("./api/v1");
@@ -40,6 +42,7 @@ socket.on("connect", (connection) => {
             if(parsedData.event.data){
                 if(parsedData.event.data.entity_id == "sensor.david_iphonee_battery_state"){
                     console.log(parsedData.event.data.new_state.state);
+                    io.emit('chargingStatus', parsedData.event.data.new_state.state);
                 }
             } 
         } catch (error) {
@@ -57,20 +60,18 @@ setTimeout(() => {
 }, 1000);
 
 const app = express();
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
-
-app.get('/', (req, res, next) => {
-    /* res.json({
-        Message: "API is working ✨"
-    }); */
-    APIv1.getChargingStatus()
-    .then((result) => {
-        res.send(result.data);
-    })
-    .catch((err) => {
-        next(err);
-    })
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
 });
+
+app.use('/', express.static('client'))
 
 
 //Error handeler
@@ -93,6 +94,6 @@ app.use(errorHandler);
 
 //start server on port 3000
 
-const server = app.listen(3000, () =>{
+server.listen(3000, () =>{
     console.log(`Server started listening on ${server.address().port}`)
 });
